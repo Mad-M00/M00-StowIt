@@ -21,6 +21,7 @@
     <AssemblyVersion>$(ModVersion).0</AssemblyVersion>
     <FileVersion>$(ModVersion).0</FileVersion>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <AssemblyTitle>M00StowIt</AssemblyTitle>
     <Product>M00StowIt</Product>
     <Description>Category-sorting inventory management for 7 Days To Die</Description>
