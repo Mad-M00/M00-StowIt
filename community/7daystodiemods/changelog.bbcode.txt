@@ -2,6 +2,15 @@ BBCode for the site's changelog field.
 
 ---
 
+[b][size=4]v1.1 (July 2026)[/size][/b]
+
+[b]Bug fixes[/b]
+[list]
+[*]Restocking (LeftAlt + Z) no longer leaves a ghost box of numbers and icons hovering in front of your crates.
+[*]Restocking no longer plays the container-open sound for every crate it pulls from.
+[*]Slots you lock inside a crate now stay put when you restock, and locked slots from the last container you looted no longer quietly block restocking.
+[/list]
+
 [b][size=4]v1.0 - Initial release (July 2026)[/size][/b]
 
 [b]Sorting[/b]
