@@ -15,6 +15,9 @@ TestResults/
 .vscode/
 .idea/
 *.user
+
+# Personal Claude Code settings (machine-specific deploy hook)
+.claude/settings.local.json
 *.suo
 *.DotSettings.user
 
