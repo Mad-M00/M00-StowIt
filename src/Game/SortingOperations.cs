@@ -252,22 +252,60 @@ internal sealed class SortingOperations
 
 	private void ExecuteRestock(ReadOnlySpan<ILockTarget> containers)
 	{
-		XUiM_LootContainer.EItemMoveKind moveKind = MoveKindFor(SortOperation.Restock);
-		LocalPlayerUI playerUi = LocalPlayerUI.GetUIForPrimaryPlayer();
-		XUiC_LootWindow lootWindow =
-			((XUiC_LootWindowGroup)((XUiWindowGroup)playerUi.windowManager.GetWindow("looting")).Controller).lootWindow;
-		ITileEntityLootable originalLootEntity = lootWindow.te;
-		string originalContainerName = lootWindow.lootContainerName;
+		bool createNewStacks =
+			MoveKindFor(SortOperation.Restock) == XUiM_LootContainer.EItemMoveKind.FillAndCreate;
+		IInventory playerInventory = LocalPlayerUI.GetUIForPrimaryPlayer().mXUi.PlayerInventory;
 		foreach (ILockTarget target in containers)
 		{
-			var crate = (TEFeatureStorage)target;
-			lootWindow.SetTileEntityChest("StowItRestock", crate);
-			XUiM_LootContainer.StashItems(ui.BackpackWindow, lootWindow.lootContainer, playerUi.mXUi.PlayerInventory,
-				0, lootWindow.standardControls.LockedSlots, moveKind, ui.Controls.MoveStartBottomRight);
+			RestockFromCrate((TEFeatureStorage)target, playerInventory, createNewStacks);
+		}
+		LockManager.Instance.UnlockRequestLocal();
+	}
+
+	// Reads the crate's stacks directly, mirroring the slot loop of
+	// XUiM_LootContainer.StashItems. StashItems needs a UI grid as its source,
+	// and the only grid bindable to a crate is the loot window's - but that
+	// window is a live UI surface: binding it turns its slot views visible,
+	// and with no container open the restore rebind is a no-op, leaving a
+	// ghost grid on screen (issue #1). Changes propagate exactly as the
+	// borrowed grid did: UpdateSlot + SetModified under the held lock.
+	private void RestockFromCrate(TEFeatureStorage crate, IInventory playerInventory, bool createNewStacks)
+	{
+		ItemStack[] stacks = crate.items;
+		PackedBoolArray slotLocks = crate.HasSlotLocksSupport ? crate.SlotLocks : null;
+		bool startBottomRight = ui.Controls.MoveStartBottomRight;
+		bool crateChanged = false;
+		int i = startBottomRight ? stacks.Length - 1 : 0;
+		while (startBottomRight ? i >= 0 : i < stacks.Length)
+		{
+			bool slotLocked = slotLocks != null && i < slotLocks.Length && slotLocks[i];
+			ItemStack stack = stacks[i];
+			if (!slotLocked && stack != null && !stack.IsEmpty())
+			{
+				int countBefore = stack.count;
+				playerInventory.TryStackItem(0, stack);
+				// A successful AddItem hands the stack object to the player
+				// inventory, so the slot is cleared with a fresh empty stack.
+				bool movedWholeStack = stack.count == 0
+					|| (createNewStacks && playerInventory.HasItem(stack.itemValue)
+						&& playerInventory.AddItem(stack));
+				if (movedWholeStack)
+				{
+					crate.UpdateSlot(i, ItemStack.Empty.Clone());
+					crateChanged = true;
+				}
+				else if (stack.count != countBefore)
+				{
+					crate.UpdateSlot(i, stack);
+					crateChanged = true;
+				}
+			}
+			i = startBottomRight ? i - 1 : i + 1;
+		}
+		if (crateChanged)
+		{
 			crate.SetModified();
 		}
-		lootWindow.SetTileEntityChest(originalContainerName, originalLootEntity);
-		LockManager.Instance.UnlockRequestLocal();
 	}
 
 	// A quick second use of the same action escalates from topping up existing

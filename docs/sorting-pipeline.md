@@ -114,3 +114,13 @@ and restock escalate on a quick second press: first press only fills
 existing stacks, a second press within two seconds also creates new stacks.
 That window lives in Core (`ActionRepeatTracker`) so it is unit-tested
 rather than folklore.
+
+Unlike sort, restock cannot hand the crate to `StashItems` (the game API
+wants its *source* as a UI grid, and crates have none), so it reads the
+crate's stacks directly and moves them with the same `TryStackItem` /
+`AddItem` calls the game uses, honouring the crate's own slot locks.
+Changes reach the server the way vanilla looting does: `UpdateSlot` plus
+`SetModified`, issued while the container lock is held. It deliberately
+does not borrow the game's loot window for this - binding that window to
+a crate flips its slot views visible with no open/close lifecycle to hide
+them again, which left a ghost loot grid on screen (issue #1).
