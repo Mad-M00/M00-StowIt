@@ -42,11 +42,40 @@ by Walber and QuickStack by Westwud.
 2. Start the game (EAC must allow mods; `SkipWithAntiCheat` is set).
 3. In a world: place Writable Storage Crates, sign them, press LeftAlt + X.
 
-Player guides live in [docs/user](docs/user/getting-started.md) — getting
-started, sorting modes, customizing crates, and a
-[FAQ](docs/user/faq.md) — all in plain language. A compact version also
-ships inside the mod folder as
+## Documentation
+
+### For players
+
+Short pages in plain language, one topic each:
+
+| | |
+|---|---|
+| [Getting started](docs/user/getting-started.md) | Your first sorting room in four steps |
+| [Buttons and keys](docs/user/controls.md) | The backpack buttons and hotkeys |
+| [Sorting modes](docs/user/sorting-modes.md) | Category mode vs Vanilla mode |
+| [Restock](docs/user/restock.md) | Refill what you carry before a horde night |
+| [Editing crate rules](docs/user/crate-labels.md) | Make your own crates like `Breakfast = foodEgg, foodHoney` |
+| [Items from other mods](docs/user/modded-items.md) | Modded items sort too |
+| [Languages](docs/user/languages.md) | Sign crates in any of the game's languages |
+| [FAQ](docs/user/faq.md) | Answers to the usual questions |
+
+The [full guide index](docs/README.md#for-players) has a few more pages, and
+a compact version ships inside the mod folder as
 [`ModAssets/README.txt`](ModAssets/README.txt).
+
+### For mod authors
+
+The codebase is deliberately structured as an example of testable mod
+architecture — pure logic separated from game glue, 98 unit tests that run
+without the game installed, and Harmony patches kept to one-line delegations.
+The documentation walks through all of it with diagrams:
+
+| | |
+|---|---|
+| [Architecture](docs/architecture.md) | The three layers and why they exist |
+| [Sorting pipeline](docs/sorting-pipeline.md) | What happens on a keypress, end to end |
+| [Label resolution](docs/label-resolution.md) | How sign text becomes routing rules |
+| [Testing](docs/testing.md) | Testing a game mod without the game |
 
 ## Console commands (F1)
 
@@ -76,18 +105,6 @@ To deploy: copy the contents of `ModAssets\` plus
 `bin\Debug\net48\M00StowIt.dll` into the game's mod folder. The DLL can
 only be swapped while the game is closed; label/config file changes apply
 live via `stow reload`.
-
-## For mod authors
-
-The codebase is deliberately structured as an example of testable mod
-architecture — pure logic separated from game glue, 97 unit tests that run
-without the game installed, and Harmony patches kept to one-line delegations.
-The documentation walks through all of it with diagrams:
-
-- [docs/architecture.md](docs/architecture.md) — the three layers and why they exist
-- [docs/sorting-pipeline.md](docs/sorting-pipeline.md) — what happens on a keypress, end to end
-- [docs/label-resolution.md](docs/label-resolution.md) — how sign text becomes routing rules
-- [docs/testing.md](docs/testing.md) — testing game mods without the game
 
 ## Credits
 
