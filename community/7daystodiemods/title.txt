@@ -1,0 +1,10 @@
+Title:
+
+  M00 StowIt - One Click. Everything In Its Place.
+
+Short description (for the listing / under the title):
+
+  Stop losing minutes at your storage wall after every loot run. Sign
+  your crates, press one key, and your whole backpack sorts itself
+  into the right crates - Ammo to Ammo, Food to Food, everything else
+  to Misc. Restock before horde night with a second key.

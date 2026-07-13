@@ -1,0 +1,63 @@
+[center][img]https://raw.githubusercontent.com/Mad-M00/M00-StowIt/main/docs/images/banner.png[/img]
+
+[size=6][b]One click. Everything in its place.[/b][/size][/center]
+
+You know the ritual. The loot run went great, your backpack is bursting, and now you're standing in front of your storage wall... dragging stacks one by one, opening crate after crate, trying to remember where the glue lives. Five minutes later you're still there, and the horde timer doesn't care.
+
+[b]StowIt ends that.[/b] Write a word on a crate's sign - [i]Ammo[/i], [i]Food[/i], [i]Medical[/i] - press [b]LeftAlt + X[/b], and your entire backpack sorts itself. Every item lands in the crate it belongs in. A crate signed [i]Misc[/i] catches everything else, so nothing is ever lost. What used to eat minutes of every session now takes one keypress.
+
+[img]https://raw.githubusercontent.com/Mad-M00/M00-StowIt/main/docs/user/images/sorting-room.png[/img]
+
+[size=5][b]What it does for you[/b][/size]
+
+[list]
+[*][b]One-key sorting[/b] - LeftAlt + X empties your backpack into nearby signed crates, by category, instantly.
+[*][b]One-key restocking[/b] - LeftAlt + Z pulls ammo, food and meds back OUT of your crates to top up what you carry. Gear up for horde night in a second.
+[*][b]Signs, not menus[/b] - the crate's own writable sign is the interface. No config screens, no learning curve.
+[*][b]Forgiving labels[/b] - "Mod Tools", "Mods \ Tools" and "MOD-TOOLS" all mean the same thing. Case, punctuation and plurals never matter.
+[*][b]Grows with your base[/b] - one "Ammo" crate is enough early game. Add an "Ammo 9mm" crate later and it automatically wins over the general one.
+[*][b]Overflow chaining[/b] - two crates with the same sign? The nearest fills first, the rest walks outward crate by crate. Nothing is dropped.
+[*][b]Your toolbelt is sacred[/b] - only the backpack is sorted. Toolbelt, worn armor and slots you lock with the game's own lock button are never touched.
+[*][b]Modded items sort too[/b] - the item list is read from your running game, so items from other mods route just like vanilla ones.
+[*][b]Every official language[/b] - sign your crates "Dosen", "Municion" or "弾薬" and they work exactly like the English ones.
+[*][b]Multiplayer safe[/b] - uses the game's own container locking, so two players sorting into the same room can't lose or duplicate items. Works on dedicated servers.
+[/list]
+
+[size=5][b]Make it yours[/b][/size]
+
+26 category names work out of the box (Ammo, Food, Medical, Tools, Books, Resources, Farming and more). When you want your own, one line of plain text is a rule:
+
+[code]Breakfast = foodEgg, foodHoney[/code]
+
+Sign a crate "Breakfast" and eggs and honey now skip the Food crate. You can even edit rules without leaving the game - the [b]stow[/b] console command searches items, shows exactly what any crate will receive, and adds or removes rules live.
+
+[size=5][b]Getting started - four steps[/b][/size]
+
+[list=1]
+[*]Place a few Writable Storage Crates near each other.
+[*]Press E on each sign and type a category: Ammo, Food, Medical...
+[*]Make one crate signed "Misc" - the catch-all.
+[*]Stand nearby and press LeftAlt + X. Watch your bags empty.
+[/list]
+
+[size=5][b]Good to know[/b][/size]
+
+[list]
+[*]DLL mod: EAC (anti-cheat) must be off in the launcher, like for any code mod.
+[*]Install to your Mods folder as [b]Mods\M00-StowIt[/b]. Every player needs it installed (it does not push from the server).
+[*]Needs the game's own 0_TFP_Harmony folder (ships with the game - if yours is missing, verify game files in Steam).
+[*]Safe to uninstall any time: it never touches game files or your save; sorting is a normal container action.
+[/list]
+
+[size=5][b]Links[/b][/size]
+
+[list]
+[*][url=https://github.com/Mad-M00/M00-StowIt/releases/latest]Download the latest release[/url]
+[*][url=https://github.com/Mad-M00/M00-StowIt/blob/main/docs/user/getting-started.md]Player guide[/url] - short pages in plain language
+[*][url=https://github.com/Mad-M00/M00-StowIt/blob/main/docs/user/faq.md]FAQ[/url] - including the missing 0_TFP_Harmony fix
+[*][url=https://github.com/Mad-M00/M00-StowIt]Source code on GitHub[/url] - fully open, 98 unit tests
+[/list]
+
+Inspired by QuickStack from Westwud and Walber-AutoSorter from Walber - thank you both.
+
+[i]Sort once. Never again.[/i]
