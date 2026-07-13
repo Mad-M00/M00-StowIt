@@ -12,6 +12,5 @@ That is the whole story. The mod adds nothing to locking on purpose:
 locking is the game's feature, and this mod is about sorting.
 
 ![A locked inventory slot with the vanilla lock icon](images/locked-slot.png)
-*(screenshot to add: backpack with one or two vanilla-locked slots visible)*
 
 Next: [How far it reaches](sort-distance.md)

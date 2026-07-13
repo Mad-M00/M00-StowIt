@@ -22,7 +22,6 @@ Your backpack empties and every item lands in its crate. That's the
 whole mod.
 
 ![Crates with signs like Ammo, Food and Misc](images/sorting-room.png)
-*(screenshot to add: a small base room with 4 or 5 signed crates)*
 
 ## Category names that work right away
 

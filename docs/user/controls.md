@@ -5,7 +5,6 @@
 Two new buttons sit above your backpack window:
 
 ![The two StowIt buttons above the backpack grid](images/backpack-buttons.png)
-*(screenshot to add: backpack UI with the sort and restock buttons circled)*
 
 - The **sort** button empties your backpack into nearby crates.
 - The **restock** button refills your carried stacks from nearby crates.

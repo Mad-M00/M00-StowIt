@@ -14,7 +14,6 @@ Lists every item with "chili" in its name, showing both the internal
 name and the name you see in the game.
 
 ![Console showing stow search results](images/console-as-search.png)
-*(screenshot to add: F1 console with "stow search chili" output)*
 
 ## List the game's item groups
 
@@ -36,6 +35,5 @@ takes. Use it after every rule change; it answers "did I get it right?"
 in one look.
 
 ![Console output of the stow what command](images/console-as-what.png)
-*(screenshot to add: F1 console showing "stow what Cans" output)*
 
 Next: [Items from other mods](modded-items.md)
