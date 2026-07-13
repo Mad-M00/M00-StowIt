@@ -12,7 +12,7 @@
        so the zip name always matches the assembly version. -->
   <PropertyGroup>
     <MajorVersion>1</MajorVersion>
-    <MinorVersion>0</MinorVersion>
+    <MinorVersion>1</MinorVersion>
     <!-- Added to the CI run number so the first public build is x.y.23. -->
     <BuildNumberOffset>22</BuildNumberOffset>
     <BuildNumber Condition="'$(BuildNumber)' == ''">0</BuildNumber>
