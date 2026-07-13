@@ -14,6 +14,31 @@ Check these in order:
 4. Is the mod loaded? Press F1 and type `stow`. If the console says
    unknown command, the mod did not load. Make sure EAC is off in the
    launcher and the folder is `Mods\M00-StowIt` with the DLL inside.
+5. Is `0_TFP_Harmony` still there? See the next question.
+
+## The mod does not load and 0_TFP_Harmony is missing
+
+The game itself ships a folder called `0_TFP_Harmony` inside the
+`Mods` folder of the game install. Every DLL mod needs it, this one
+included. It often gets deleted by accident when people clear out old
+mods, and then no DLL mod loads at all.
+
+To get it back, let Steam repair the install:
+
+1. In your Steam library, right-click **7 Days to Die** and pick
+   **Properties**.
+2. Open **Installed Files**.
+3. Click **Verify integrity of game files**.
+
+Steam re-downloads the missing vanilla files, `0_TFP_Harmony`
+included. Do not put your own copy there or move it; it belongs to
+the game.
+
+One thing that is *not* a problem: if you keep your mods in
+`%APPDATA%\7DaysToDie\Mods`, you will not see `0_TFP_Harmony` next to
+them. It lives only in the game install's `Mods` folder, and the game
+reads both folders. Missing from the install folder: broken. Missing
+from the AppData folder: normal.
 
 ## An item went to a crate I did not expect
 

@@ -8,6 +8,10 @@ crate with one keypress.
 - Writable Storage Crates (the ones with a sign you can write on)
 - This mod installed in your Mods folder
 - EAC (anti-cheat) turned off in the launcher, like for any DLL mod
+- The game's own `0_TFP_Harmony` folder still in the install's Mods
+  folder. It ships with the game; if it has gone missing, the
+  [FAQ](faq.md#the-mod-does-not-load-and-0_tfp_harmony-is-missing)
+  shows how to get it back.
 
 ## First time setup
 
