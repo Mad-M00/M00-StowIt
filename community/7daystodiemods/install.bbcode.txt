@@ -1,0 +1,96 @@
+[size=5][b]Installation[/b][/size]
+
+StowIt is a DLL (code) mod. Installing it is a two-minute job, but the
+details below matter - most "it doesn't work" reports come down to one
+of these steps.
+
+[size=4][b]1. Download[/b][/size]
+
+Grab the latest release zip from
+[url=https://github.com/Mad-M00/M00-StowIt/releases/latest]GitHub Releases[/url].
+
+[size=4][b]2. Find your Mods folder[/b][/size]
+
+The game reads mods from two places. Either works - pick one and stay
+consistent:
+
+[list]
+[*][b]Game install folder[/b] (the classic spot):
+[code]...\Steam\steamapps\common\7 Days To Die\Mods[/code]
+[*][b]User data folder[/b] (the spot The Fun Pimps recommend):
+press [b]Windows + R[/b], type [code]%APPDATA%\7DaysToDie\Mods[/code] and hit Enter.
+[/list]
+
+If the Mods folder doesn't exist yet, create it - the name is exactly
+[b]Mods[/b].
+
+[size=4][b]3. Extract the zip[/b][/size]
+
+Unpack so the folder structure looks like this:
+
+[code]Mods\
+  M00-StowIt\
+    M00StowIt.dll
+    ModInfo.xml
+    CrateLabels.txt
+    ...[/code]
+
+[b]The most common mistake:[/b] extracting a folder into a folder, ending
+up with [i]Mods\M00-StowIt\M00-StowIt\ModInfo.xml[/i]. If ModInfo.xml is
+not directly inside [i]Mods\M00-StowIt[/i], the game will not see the mod.
+
+[size=4][b]4. Turn off EAC (anti-cheat)[/b][/size]
+
+Like every code mod, StowIt only loads with EAC off:
+
+[list=1]
+[*]Start the game via the launcher (right-click the game in Steam > Show launcher, or just start it normally if the launcher appears).
+[*]Untick [b]Use EAC (Easy Anti-Cheat)[/b].
+[*]Start the game from that launcher.
+[/list]
+
+With EAC left on, nothing breaks - the mod simply skips itself
+([i]SkipWithAntiCheat[/i]) and you'll wonder why nothing happens.
+
+[size=4][b]5. Check the game's own Harmony folder[/b][/size]
+
+Look inside the [b]game install's[/b] Mods folder (the steamapps one,
+even if you put StowIt in AppData) for a folder named
+[b]0_TFP_Harmony[/b]. It ships with the game and every DLL mod needs it.
+
+Missing? People often delete it when clearing out old mods. Get it back
+in Steam: right-click [b]7 Days to Die[/b] > [b]Properties[/b] >
+[b]Installed Files[/b] > [b]Verify integrity of game files[/b].
+
+[size=4][b]6. Confirm it loaded[/b][/size]
+
+Start a world, press [b]F1[/b] and type [code]stow[/code]. If the console
+answers with the command help, you're done - sign some crates and press
+[b]LeftAlt + X[/b]. If it says "unknown command", walk back through
+steps 3-5.
+
+[size=4][b]Multiplayer and dedicated servers[/b][/size]
+
+Every player needs the mod installed - as a DLL mod it does not push
+itself from the server. On a dedicated server, install the same version
+into the server's Mods folder too, and keep versions matched between
+server and clients.
+
+[size=4][b]Updating[/b][/size]
+
+[list=1]
+[*]Close the game (the DLL can't be swapped while it runs).
+[*]If you customised [b]CrateLabels.txt[/b], copy it somewhere safe.
+[*]Delete the old [i]Mods\M00-StowIt[/i] folder and extract the new zip.
+[*]Copy your customised CrateLabels.txt back over the new one.
+[/list]
+
+[size=4][b]Uninstalling[/b][/size]
+
+Delete the [i]Mods\M00-StowIt[/i] folder. That's all. The mod never
+touches game files or your save - everything it sorted stays exactly
+where it is.
+
+Stuck on something else? The
+[url=https://github.com/Mad-M00/M00-StowIt/blob/main/docs/user/faq.md]FAQ[/url]
+covers the usual suspects.
