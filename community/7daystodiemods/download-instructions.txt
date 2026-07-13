@@ -1,0 +1,46 @@
+Plain text for the site's "Download Instructions" field.
+The editor only has simple formatting - suggested: make the ALL-CAPS
+lead-in words bold, use its numbered-list button for the steps.
+The zip is downloaded from the listing page itself, so there is no
+"download from GitHub" step.
+
+---
+
+INSTALL - takes two minutes:
+
+1. Download the zip from this page.
+2. Open your Mods folder. Either of these works:
+   ...\Steam\steamapps\common\7 Days To Die\Mods
+   or press Windows+R and type: %APPDATA%\7DaysToDie\Mods
+   (If there is no Mods folder yet, create one named exactly: Mods)
+3. Extract the zip there. You must end up with ModInfo.xml directly
+   inside Mods\M00-StowIt. If you see Mods\M00-StowIt\M00-StowIt,
+   move the inner folder up one level - a folder inside a folder is
+   the number one reason a mod "does not work".
+4. Turn EAC (anti-cheat) OFF in the game launcher, like for any DLL
+   mod. With EAC on, the mod safely skips itself and simply does
+   nothing.
+5. Check that the folder 0_TFP_Harmony still exists in the game
+   install's Mods folder. It ships with the game and all DLL mods
+   need it. If it is missing (often deleted by accident when clearing
+   out old mods): in Steam right-click 7 Days to Die > Properties >
+   Installed Files > Verify integrity of game files, and Steam puts
+   it back.
+
+CHECK IT WORKS: in a world, press F1 and type: stow
+If the console shows the command help, you are set. Sign some
+Writable Storage Crates (Ammo, Food, Misc...), stand near them and
+press LeftAlt + X.
+
+MULTIPLAYER: every player installs the mod (it does not push from
+the server). On a dedicated server, install it on the server too and
+keep versions matched.
+
+UPDATING: close the game first, keep a copy of CrateLabels.txt if
+you edited it, replace the mod folder, put your CrateLabels.txt back.
+
+UNINSTALLING: delete the Mods\M00-StowIt folder. Your save and your
+sorted items are untouched.
+
+Questions? The FAQ covers the usual suspects:
+https://github.com/Mad-M00/M00-StowIt/blob/main/docs/user/faq.md
