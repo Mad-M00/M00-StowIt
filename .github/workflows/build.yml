@@ -20,8 +20,9 @@ jobs:
       - name: Test
         run: dotnet test tests/M00-StowIt.Tests/M00-StowIt.Tests.csproj -c Release --nologo
 
-      # Major.Minor come from the csproj (single source of truth);
-      # the build number is this workflow's run number.
+      # Major.Minor and the build offset come from the csproj (single source
+      # of truth); the build number is the offset plus this workflow's run
+      # number, so numbering starts where the csproj says.
       - name: Compute version
         id: version
         shell: pwsh
@@ -30,14 +31,17 @@ jobs:
           $props = $proj.Project.PropertyGroup
           $major = ($props.MajorVersion | Where-Object { $_ }) | Select-Object -First 1
           $minor = ($props.MinorVersion | Where-Object { $_ }) | Select-Object -First 1
-          $version = "$major.$minor.${{ github.run_number }}"
+          $offset = ($props.BuildNumberOffset | Where-Object { $_ }) | Select-Object -First 1
+          $build = [int]$offset + ${{ github.run_number }}
+          $version = "$major.$minor.$build"
           "version=$version" >> $env:GITHUB_OUTPUT
+          "build=$build" >> $env:GITHUB_OUTPUT
           Write-Host "Mod version: $version"
 
       # CI has no game install, so the csproj automatically compiles against
       # the metadata-only reference assemblies committed under refs/.
       - name: Build
-        run: dotnet build M00-StowIt.csproj -c Release -p:BuildNumber=${{ github.run_number }} --nologo
+        run: dotnet build M00-StowIt.csproj -c Release -p:BuildNumber=${{ steps.version.outputs.build }} --nologo
 
       - name: Package
         shell: pwsh
