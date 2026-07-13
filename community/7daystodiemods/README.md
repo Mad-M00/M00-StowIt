@@ -10,6 +10,7 @@ Source text for the mod's page on [7daystodiemods.com](https://7daystodiemods.co
 | `homepage.bbcode.txt` | The same page body in BBCode, for sites that want BBCode (e.g. Nexus) |
 | `install.bbcode.txt` | The install instructions in BBCode, same purpose |
 | `download-instructions.txt` | Plain-text install steps for the site's simple "Download Instructions" field (their site hosts the zip) |
+| `changelog.txt` | Plain-text changelog for the listing, starting at v1.0 |
 | `thumbnail-400x225.png` | The listing thumbnail, at the site's required 400x225 |
 | `promo-art.png` | The full-size promo artwork the thumbnail is cut from |
 
