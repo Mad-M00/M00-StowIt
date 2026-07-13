@@ -1,0 +1,31 @@
+# M00 StowIt - Traditional Chinese sign labels
+# "X = @Y" means: a crate signed "X" behaves exactly like the "Y" crate,
+# including its exclusions. Labels in CrateLabels.txt always win over
+# this file. Delete this file to turn these labels off.
+
+飲料 = @Drinks
+罐頭 = @Cans
+烹飪 = @Cooking
+醫療 = @Medical
+製作, 製造 = @Crafting
+資源 = @Resources
+農業, 農場 = @Farming
+建築 = @Building
+裝飾 = @Decor
+電氣, 電力 = @Electrical
+彈藥 9mm = @Ammo 9mm
+彈藥 7.62 = @Ammo 7.62
+彈藥 .44 = @Ammo .44
+彈藥 霰彈 = @Ammo Shotgun
+彈藥 箭, 箭矢 = @Ammo Arrows
+彈藥 爆炸物 = @Ammo Explosives
+彈藥 = @Ammo
+載具, 車輛 = @Motor
+機器人 = @Robotics
+書籍 = @Books
+護甲 = @Armour
+服裝 = @Clothing
+工具模組 = @Mod Tools
+武器模組 = @Mod Weapons
+護甲模組 = @Mod Armor
+模組 = @Mods

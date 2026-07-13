@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml>
+	<Name value="M00-StowIt"/>
+	<DisplayName value="M00 StowIt"/>
+	<Description value="Sorts your inventory into nearby Writable Storage Crates by category: each item is routed to the crate whose sign matches its crate label (e.g. Medical, Food, Ammo). Inspired by QuickStack from Westwud and Walber-AutoSorter from Walber."/>
+	<Author value="Brett"/>
+	<Version value="1.4.0"/>
+	<SkipWithAntiCheat value="true"/>
+</xml>

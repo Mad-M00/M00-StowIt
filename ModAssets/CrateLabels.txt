@@ -1,0 +1,164 @@
+# ==========================================================================
+#  M00 StowIt - Crate Labels
+# ==========================================================================
+#
+#  Each line maps crate-sign labels to what the crate receives:
+#
+#      <label>[, <label>...] = <token>[, <token>...]
+#
+#  Every token is resolved automatically, in this order:
+#    1. @Label                    (same rule as that label, e.g. @Cans)
+#    2. game GROUP name           (e.g. Food/Cooking, Medical, Ammo)
+#    3. another label's name      (like @, for names that are not groups)
+#    4. item name PATTERN         ('*' wildcard, e.g. foodCan*)
+#    5. exact internal item name  (e.g. foodCanChili  - see stow search)
+#    6. exact item DISPLAY name   (e.g. Sham Sandwich)
+#  A token starting with '-' is an exclusion (same resolution rules).
+#  Translated sign labels live in per-language files next to this one
+#  (CrateLabels.de.txt, .fr, .es, .ja, ... ). All of them are always
+#  active; delete a file to turn its language off.
+#
+#  Routing order when you Quick Stack (most specific wins):
+#    pass 1: every crate tops up stacks of items it already holds
+#    pass 2: crates with ITEM tokens take their matching items
+#    pass 3: crates with GROUP tokens take their matching items
+#    pass 4: the fallback crate (sign "Misc") takes everything left
+#
+#  Labels not listed here still work - they are resolved the same way
+#  directly from the sign text (so a crate signed "foodCan*" just works).
+#
+#  Console helpers (F1):
+#    stow what <label>    - how a label resolves + full list of items it takes
+#    stow search <search>  - find internal item names by name or display name
+#    stow groups          - list all game groups
+#    stow reload          - re-read this file without restarting the game
+#
+#  WarnUnknownGroups: 1 = log a warning when a token matches nothing
+#  (catches typos). Set to 0 to silence. Reserved name, not a crate label.
+
+WarnUnknownGroups = 1
+
+# --------------------------------------------------------------------------
+#  FOOD & CONSUMABLES
+# --------------------------------------------------------------------------
+
+# All jars, teas, coffee, beer and Mega Crush. Grandpa's specials are Buffs.
+Drinks = drink*, -drinkJarGrandpas*
+
+# All canned food (the Sham schematic is a book, keep it out).
+Cans = foodCan*, -foodCanShamSchematic
+
+# Raw ingredients and harvested crops (cotton goes to Crafting, grills and
+# pots to Tools).
+Cooking = foodCornMeal, foodEgg, foodHoney, foodRawMeat, foodRawMeatBundle, foodRottingFlesh, resourceAnimalFat, resourceSnowBall, foodCrop*, resourceCrop*, -resourceCropCottonPlant
+
+# Cooked meals and everything else edible (Drinks/Cans/Cooking crates drain
+# their items first because item tokens beat group tokens). Workstation blocks
+# that carry the Food/Cooking group are excluded so they route to Building/Tools.
+Food = Food/Cooking, -toolCooking*, -campfire, -cntApiary, -cntCollapsedCampfire, -cntDewCollector, -decoCookingPot*
+
+# Candies, steroids, Recog, Fort Bites, vitamins, Grandpa's moonshine and
+# elixirs, pumpkin cheesecake. Painkillers and antibiotics stay with Medical.
+Buffs = drug*, -drugPainkillers, -drugAntibiotics, -drugHerbalAntibiotics, drinkJarGrandpas*, foodPumpkinCheesecake
+
+# Bandages, first aid, splints, blood bags + the meds excluded from Buffs.
+Medical = Medical, -resourceSewingKit
+
+# --------------------------------------------------------------------------
+#  MATERIALS
+# --------------------------------------------------------------------------
+
+# Ingredient components that make things: leather, cloth, bones, feathers,
+# glue, duct tape, paper, springs, nails, mechanical/electrical parts, all
+# chemicals, cotton. Built as: Chemicals group + Resources group leftovers
+# (the minable items below drain into the Resources crate first because item
+# tokens beat group tokens).
+Crafting = Chemicals, Resources, resourceCropCottonPlant, resourceBullet*, resourceBuckshot, resourceArrowHead*, resourceRocket*, -ammoGasCan*, -carBattery, -toolBeaker, -radiatorHouse01*
+
+# Minable raw materials: stone, wood, sand, glass, clay, coal, nitrate,
+# oil shale, silver, building bulk. Scrap/forged metals and pipes count as
+# Crafting ingredients (they fall through via the Resources group).
+Resources = resourceRockSmall, resourceRockSmallBundle, resourceWood, resourceCrushedSand, resourceBrokenGlass, resourceClayLump, resourceCobblestones, resourceCement, resourceConcreteMix, resourceCoal, resourcePotassiumNitratePowder, resourceOilShale, resourceSilverNugget, resourceRadiator, unit_iron
+
+# Seeds (crop and tree) and farm plots.
+Farming = planted*, farmPlotBlock*, treePlantedOak1m, treePlantedMountainPine1m, treePlantedWinterPine1m
+
+# --------------------------------------------------------------------------
+#  BUILDING
+# --------------------------------------------------------------------------
+
+# Frames, building blocks, advanced shapes, potted plants, land claim block.
+# Bedrolls are covered by the Building group.
+Building / Décor, Building / Decor, Building = Building, advBuilding, plant*Potted*, keystoneBlock
+
+# Decorative blocks and misc placeables.
+Décor, Decor = Decor/Miscellaneous
+
+# Turrets, traps, battery banks, generators, lights, switches (the Science
+# group). Exclusions keep its medical/vehicle members where they belong.
+Electrical = Science, solarCell, ammoDartIron, -medical*, -drug*, -foodHoney, -resourceCropAloeLeaf, -vehicle*, -chandelier*, -lantern*, -sign*, -chemistryStation*
+
+# --------------------------------------------------------------------------
+#  EQUIPMENT
+# --------------------------------------------------------------------------
+
+# Specific ammo crates — OPTIONAL. Only crates that actually exist nearby do
+# anything: early game, a single "Ammo" crate catches everything; once you
+# put up an "Ammo 9mm" crate it wins, because lines HIGHER in this file drain
+# first within a tier. Order lines most-specific-first.
+Ammo 9mm = ammo9mm*, ammoBundle9mm*
+Ammo 7.62, Ammo 7.62mm, Ammo 762 = ammo762mm*, ammoBundle762mm*
+Ammo .44, Ammo 44 = ammo44Magnum*, ammoBundle44Magnum*
+Ammo Shotgun = ammoShotgun*, ammoBundleShotgun*
+Ammo Arrows = ammoArrow*, ammoCrossbowBolt*, ammoBundleArrow*, ammoBundleCrossbow*
+Ammo Explosives = ammoRocket*, thrown*, -thrownGrenadeNukeAdmin
+
+# Generic ammo crate: bullets, shells, arrows, bolts, explosives. Turret ammo
+# goes to Robotics, gas cans to Motor, casings/tips/powder to Crafting.
+Ammo = Ammo, -ammoJunkTurret*, -ammoGasCan*
+
+# Vehicles, chassis, wheels, engines, batteries, gas and vehicle mods.
+# Radiators are Resources, headlights are Crafting, mod schematics are Books.
+Motor = vehicle*, -vehiclesSkillMagazine, smallEngine, carBattery, ammoGasCan*, modVehicle*, -*Schematic
+
+# Junk sledge/turret/drone, turret ammo (incl. bundles), robotics parts and
+# drone mods (their schematics stay with Books).
+Robotics = Robotics, gunBotRoboticsParts, ammoBundleJunkTurret*, modRobotic*, -*Schematic
+
+# Skill magazines, perk books, schematics.
+Books = Books
+
+# Weapon and armor parts only (rifle parts, machete parts, armor parts...).
+# Mechanical/electrical parts count as Crafting ingredients.
+Parts = gun*Parts, meleeWpn*Parts, meleeTool*Parts, -gunBotRoboticsParts, armorParts, resourceLegendaryParts
+
+# Axes, picks, shovels, wrenches, nailgun, forge/apiary/dew tools, lockpicks,
+# cooking grills and pots, repair kits.
+Tools = Tools/Traps, resourceRepairKit
+
+# Armor sets and pieces (armorParts belongs to Parts, the magazine to Books).
+Armour, Armor = armor*, -armorParts, -armorSkillMagazine
+
+# Guns, bows, melee weapons. Ammo-group items are excluded so arrows stay
+# with Ammo.
+Weapons = Melee Weapons, Ranged Weapons, -ammo*
+
+# Casual clothing tiers.
+Clothing = clothing*
+
+# --------------------------------------------------------------------------
+#  ITEM MODS (all share one game group, so they are split by name).
+#  Specific crates first; the generic "Mods" crate below catches everything
+#  when the specific crates don't exist yet. Mod SCHEMATICS go to Books.
+# --------------------------------------------------------------------------
+
+# Sign spelling is forgiving: "Mod Tools", "Mods \ Tools", "MOD-TOOLS" or the
+# label split across two sign lines all resolve to the same alias.
+Mod Tools = modFuelTank*, modDye*, -*Schematic
+Mod Weapons = modGun*, modMelee*, modShotgun*, -*Schematic
+Mod Armor, Mod Armour = modArmor*, modRadiationReady, -*Schematic
+
+# Generic catch-all for all item mods (vehicle and drone mods still prefer
+# Motor/Robotics; schematics stay with Books; "modular*" décor blocks are
+# not item mods).
+Mods = mod*, -*Schematic, -modVehicle*, -modRobotic*, -modular*

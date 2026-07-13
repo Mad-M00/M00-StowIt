@@ -1,0 +1,35 @@
+# M00 StowIt - Deutsch (German) sign labels
+# "X = @Y" means: a crate signed "X" behaves exactly like the "Y" crate,
+# including its exclusions. Labels in CrateLabels.txt always win over
+# this file. Delete this file to turn these labels off.
+
+Getränke = @Drinks
+Dosen, Konserven = @Cans
+Zutaten, Kochen = @Cooking
+Essen, Nahrung = @Food
+Stärkungen = @Buffs
+Medizin = @Medical
+Handwerk = @Crafting
+Rohstoffe = @Resources
+Landwirtschaft = @Farming
+Bauen, Baumaterial = @Building
+Deko, Dekoration = @Decor
+Elektrik, Elektro = @Electrical
+Munition 9mm = @Ammo 9mm
+Munition 7.62 = @Ammo 7.62
+Munition .44 = @Ammo .44
+Munition Schrot = @Ammo Shotgun
+Munition Pfeile, Pfeile = @Ammo Arrows
+Munition Sprengstoff, Sprengstoff = @Ammo Explosives
+Munition = @Ammo
+Fahrzeuge = @Motor
+Robotik = @Robotics
+Bücher = @Books
+Teile = @Parts
+Werkzeuge = @Tools
+Rüstung = @Armour
+Waffen = @Weapons
+Kleidung = @Clothing
+Werkzeug Mods = @Mod Tools
+Waffen Mods = @Mod Weapons
+Rüstung Mods, Rüstungs Mods = @Mod Armor

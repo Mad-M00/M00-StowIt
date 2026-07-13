@@ -1,0 +1,35 @@
+# M00 StowIt - Japanese sign labels
+# "X = @Y" means: a crate signed "X" behaves exactly like the "Y" crate,
+# including its exclusions. Labels in CrateLabels.txt always win over
+# this file. Delete this file to turn these labels off.
+
+飲み物, ドリンク = @Drinks
+缶詰 = @Cans
+食材, 料理 = @Cooking
+食料, 食べ物 = @Food
+バフ, 強化 = @Buffs
+医療, 薬 = @Medical
+クラフト = @Crafting
+資源 = @Resources
+農業, 農場 = @Farming
+建築 = @Building
+装飾 = @Decor
+電気 = @Electrical
+弾薬 9mm = @Ammo 9mm
+弾薬 7.62 = @Ammo 7.62
+弾薬 .44 = @Ammo .44
+弾薬 ショットガン = @Ammo Shotgun
+弾薬 矢, 矢 = @Ammo Arrows
+弾薬 爆発物, 爆発物 = @Ammo Explosives
+弾薬 = @Ammo
+乗り物, 車両 = @Motor
+ロボット = @Robotics
+本, 書籍 = @Books
+部品, パーツ = @Parts
+道具, ツール = @Tools
+防具, アーマー = @Armour
+武器 = @Weapons
+服, 衣類 = @Clothing
+道具MOD = @Mod Tools
+武器MOD = @Mod Weapons
+防具MOD = @Mod Armor

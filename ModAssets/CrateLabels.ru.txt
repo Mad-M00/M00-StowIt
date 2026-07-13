@@ -1,0 +1,36 @@
+# M00 StowIt - Russian sign labels
+# "X = @Y" means: a crate signed "X" behaves exactly like the "Y" crate,
+# including its exclusions. Labels in CrateLabels.txt always win over
+# this file. Delete this file to turn these labels off.
+
+Напитки = @Drinks
+Консервы = @Cans
+Ингредиенты, Готовка = @Cooking
+Еда = @Food
+Бафы = @Buffs
+Медицина, Лекарства = @Medical
+Крафт, Ремесло = @Crafting
+Ресурсы = @Resources
+Ферма, Земледелие = @Farming
+Строительство, Стройка = @Building
+Декор = @Decor
+Электрика = @Electrical
+Патроны 9mm = @Ammo 9mm
+Патроны 7.62 = @Ammo 7.62
+Патроны .44 = @Ammo .44
+Патроны Дробь = @Ammo Shotgun
+Патроны Стрелы, Стрелы = @Ammo Arrows
+Взрывчатка = @Ammo Explosives
+Патроны, Боеприпасы = @Ammo
+Транспорт, Машины = @Motor
+Роботы, Робототехника = @Robotics
+Книги = @Books
+Детали, Запчасти = @Parts
+Инструменты = @Tools
+Броня = @Armour
+Оружие = @Weapons
+Одежда = @Clothing
+Моды Инструментов = @Mod Tools
+Моды Оружия = @Mod Weapons
+Моды Брони = @Mod Armor
+Моды = @Mods

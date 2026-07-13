@@ -1,0 +1,93 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>M00StowIt</AssemblyName>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <!-- Version. Major.Minor are set here (the single source of truth); the
+       build number is injected by CI via -p:BuildNumber=N and defaults to 0
+       for local builds. The GitHub workflow reads Major/Minor from this file
+       so the zip name always matches the assembly version. -->
+  <PropertyGroup>
+    <MajorVersion>1</MajorVersion>
+    <MinorVersion>4</MinorVersion>
+    <BuildNumber Condition="'$(BuildNumber)' == ''">0</BuildNumber>
+    <ModVersion>$(MajorVersion).$(MinorVersion).$(BuildNumber)</ModVersion>
+    <Version>$(ModVersion)</Version>
+    <AssemblyVersion>$(ModVersion).0</AssemblyVersion>
+    <FileVersion>$(ModVersion).0</FileVersion>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <AssemblyTitle>M00StowIt</AssemblyTitle>
+    <Product>M00StowIt</Product>
+    <Description>Category-sorting inventory management for 7 Days To Die</Description>
+    <Copyright>Inspired by QuickStack from Westwud and Walber-AutoSorter from Walber</Copyright>
+  </PropertyGroup>
+
+  <!-- Game references: the local install when present, otherwise the
+       committed metadata-only reference assemblies in refs\ (used by CI,
+       which has no game). Pass -p:ForceRefs=true to test the CI path
+       locally. The project compiles against the game's Mono BCL (NoStdLib)
+       because the game's mscorlib includes Span/ReadOnlySpan, which .NET
+       Framework 4.8 reference assemblies do not. -->
+  <PropertyGroup>
+    <GameDir>C:\Program Files (x86)\Steam\steamapps\common\7 Days To Die</GameDir>
+    <ManagedDir>$(GameDir)\7DaysToDie_Data\Managed</ManagedDir>
+    <HarmonyDir>$(GameDir)\Mods\0_TFP_Harmony</HarmonyDir>
+    <UseRefAssemblies Condition="'$(ForceRefs)' == 'true' or !Exists('$(ManagedDir)\Assembly-CSharp.dll')">true</UseRefAssemblies>
+    <ManagedDir Condition="'$(UseRefAssemblies)' == 'true'">$(MSBuildProjectDirectory)\refs</ManagedDir>
+    <HarmonyDir Condition="'$(UseRefAssemblies)' == 'true'">$(MSBuildProjectDirectory)\refs</HarmonyDir>
+    <NoStdLib>true</NoStdLib>
+    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="mscorlib">
+      <HintPath>$(ManagedDir)\mscorlib.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>$(ManagedDir)\System.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>$(ManagedDir)\System.Core.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <HintPath>$(ManagedDir)\System.Xml.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(ManagedDir)\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>$(HarmonyDir)\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(ManagedDir)\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="LogLibrary">
+      <HintPath>$(ManagedDir)\LogLibrary.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="NGUI">
+      <HintPath>$(ManagedDir)\NGUI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="ModAssets\**" />
+  </ItemGroup>
+  <!-- The test project is built separately against standard .NET; keep it out
+       of the game assembly. -->
+  <ItemGroup>
+    <Compile Remove="tests\**" />
+    <None Remove="tests\**" />
+  </ItemGroup>
+</Project>

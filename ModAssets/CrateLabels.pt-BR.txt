@@ -1,0 +1,35 @@
+# M00 StowIt - PortuguÃªs do Brasil (Brazilian Portuguese) sign labels
+# "X = @Y" means: a crate signed "X" behaves exactly like the "Y" crate,
+# including its exclusions. Labels in CrateLabels.txt always win over
+# this file. Delete this file to turn these labels off.
+
+Bebidas = @Drinks
+Latas, Enlatados = @Cans
+Ingredientes, Cozinha = @Cooking
+Comida = @Food
+Fortalecedores = @Buffs
+Medicina, Médico = @Medical
+Fabricação, Criação = @Crafting
+Recursos = @Resources
+Agricultura, Fazenda = @Farming
+Construção = @Building
+Decoração = @Decor
+Elétrica, Elétrico = @Electrical
+Munição 9mm = @Ammo 9mm
+Munição 7.62 = @Ammo 7.62
+Munição .44 = @Ammo .44
+Munição Escopeta = @Ammo Shotgun
+Munição Flechas, Flechas = @Ammo Arrows
+Munição Explosivos, Explosivos = @Ammo Explosives
+Munição = @Ammo
+Veículos = @Motor
+Robótica = @Robotics
+Livros = @Books
+Peças = @Parts
+Ferramentas = @Tools
+Armadura = @Armour
+Armas = @Weapons
+Roupas = @Clothing
+Mods Ferramentas = @Mod Tools
+Mods Armas = @Mod Weapons
+Mods Armadura = @Mod Armor

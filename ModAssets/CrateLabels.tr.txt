@@ -1,0 +1,36 @@
+# M00 StowIt - TÃ¼rkÃ§e (Turkish) sign labels
+# "X = @Y" means: a crate signed "X" behaves exactly like the "Y" crate,
+# including its exclusions. Labels in CrateLabels.txt always win over
+# this file. Delete this file to turn these labels off.
+
+İçecekler = @Drinks
+Konserve, Konserveler = @Cans
+Malzemeler, Mutfak = @Cooking
+Yemek, Yiyecek = @Food
+Güçlendiriciler = @Buffs
+Tıbbi, İlaçlar = @Medical
+Üretim, Zanaat = @Crafting
+Kaynaklar = @Resources
+Tarım, Çiftlik = @Farming
+İnşaat, Yapı = @Building
+Dekorasyon = @Decor
+Elektrik = @Electrical
+Mühimmat 9mm = @Ammo 9mm
+Mühimmat 7.62 = @Ammo 7.62
+Mühimmat .44 = @Ammo .44
+Mühimmat Pompalı = @Ammo Shotgun
+Mühimmat Ok, Oklar = @Ammo Arrows
+Patlayıcılar = @Ammo Explosives
+Mühimmat, Cephane = @Ammo
+Araçlar = @Motor
+Robotik = @Robotics
+Kitaplar = @Books
+Parçalar = @Parts
+Aletler = @Tools
+Zırh = @Armour
+Silahlar = @Weapons
+Kıyafet, Giysiler = @Clothing
+Alet Modları = @Mod Tools
+Silah Modları = @Mod Weapons
+Zırh Modları = @Mod Armor
+Modlar = @Mods

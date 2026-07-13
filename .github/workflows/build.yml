@@ -1,0 +1,68 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Test
+        run: dotnet test tests/M00-StowIt.Tests/M00-StowIt.Tests.csproj -c Release --nologo
+
+      # Major.Minor come from the csproj (single source of truth);
+      # the build number is this workflow's run number.
+      - name: Compute version
+        id: version
+        shell: pwsh
+        run: |
+          [xml]$proj = Get-Content M00-StowIt.csproj
+          $props = $proj.Project.PropertyGroup
+          $major = ($props.MajorVersion | Where-Object { $_ }) | Select-Object -First 1
+          $minor = ($props.MinorVersion | Where-Object { $_ }) | Select-Object -First 1
+          $version = "$major.$minor.${{ github.run_number }}"
+          "version=$version" >> $env:GITHUB_OUTPUT
+          Write-Host "Mod version: $version"
+
+      # CI has no game install, so the csproj automatically compiles against
+      # the metadata-only reference assemblies committed under refs/.
+      - name: Build
+        run: dotnet build M00-StowIt.csproj -c Release -p:BuildNumber=${{ github.run_number }} --nologo
+
+      - name: Package
+        shell: pwsh
+        run: |
+          $version = "${{ steps.version.outputs.version }}"
+          $stage = "staging/M00-StowIt"
+          New-Item -ItemType Directory -Force $stage | Out-Null
+          Copy-Item ModAssets/* $stage -Recurse
+          Copy-Item bin/Release/net48/M00StowIt.dll $stage
+          # Stamp the release version into ModInfo.xml so the game's mod
+          # list shows the same number as the zip and the assembly.
+          $modInfo = "$stage/ModInfo.xml"
+          (Get-Content $modInfo) -replace '<Version value="[^"]*"/>', "<Version value=""$version""/>" |
+            Set-Content $modInfo -Encoding UTF8
+          Compress-Archive -Path $stage -DestinationPath "M00-StowIt-$version.zip"
+          Write-Host "Created M00-StowIt-$version.zip"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: M00-StowIt-${{ steps.version.outputs.version }}
+          path: M00-StowIt-*.zip
+
+      # Pushing a tag like v1.4 publishes the zip as a GitHub Release.
+      - name: Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: M00-StowIt-*.zip

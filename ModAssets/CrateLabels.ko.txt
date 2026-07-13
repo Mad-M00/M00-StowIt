@@ -1,0 +1,36 @@
+# M00 StowIt - Korean sign labels
+# "X = @Y" means: a crate signed "X" behaves exactly like the "Y" crate,
+# including its exclusions. Labels in CrateLabels.txt always win over
+# this file. Delete this file to turn these labels off.
+
+음료 = @Drinks
+통조림 = @Cans
+재료, 요리 = @Cooking
+음식 = @Food
+버프 = @Buffs
+의료, 약품 = @Medical
+제작 = @Crafting
+자원 = @Resources
+농사, 농장 = @Farming
+건축 = @Building
+장식 = @Decor
+전기 = @Electrical
+탄약 9mm = @Ammo 9mm
+탄약 7.62 = @Ammo 7.62
+탄약 .44 = @Ammo .44
+탄약 샷건 = @Ammo Shotgun
+탄약 화살, 화살 = @Ammo Arrows
+탄약 폭발물, 폭발물 = @Ammo Explosives
+탄약 = @Ammo
+차량 = @Motor
+로봇 = @Robotics
+책 = @Books
+부품 = @Parts
+도구 = @Tools
+방어구 = @Armour
+무기 = @Weapons
+옷, 의류 = @Clothing
+도구 모드 = @Mod Tools
+무기 모드 = @Mod Weapons
+방어구 모드 = @Mod Armor
+모드 = @Mods
