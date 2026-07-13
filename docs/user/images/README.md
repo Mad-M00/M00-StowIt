@@ -1,13 +1,13 @@
-# Screenshots wanted
+# User guide screenshots
 
-The user guide references these images. Drop the PNGs into this folder
-with these exact names and the pages will pick them up:
+All images the user guide references live here. If a UI change makes
+one stale, recapture it to match:
 
-| File | What to capture |
+| File | What it shows |
 |---|---|
-| `sorting-room.png` | A small base room with 4-5 signed Writable Storage Crates (Ammo, Food, Medical, Misc...) |
-| `backpack-buttons.png` | The backpack window with the two StowIt buttons visible above the grid (circle them) |
-| `locked-slot.png` | Backpack with one or two slots locked via the game's own lock button |
+| `sorting-room.png` | A base room with signed Writable Storage Crates (Ammo, Crafting, Food, Farming, Resources, Misc) |
+| `backpack-buttons.png` | The backpack window cropped to the inventory panel, with the two StowIt buttons circled in red |
+| `locked-slot.png` | The backpack with slots locked via the game's own lock button |
 | `console-as-what.png` | F1 console showing the output of `stow what Cans` |
 | `console-as-search.png` | F1 console showing the output of `stow search chili` |
 
