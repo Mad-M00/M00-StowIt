@@ -67,12 +67,12 @@ Yes. The item list is read from the running game, so modded items sort
 like vanilla ones. See [Items from other mods](modded-items.md) for how
 to give them their own crates.
 
-## Can I change the keys in Options, Keyboard?
+## Can I change the key bindings?
 
-No. The game's keyboard options only list the game's own actions, so
-StowIt's keys don't appear there. The keys are changed in
-`StowItConfig.xml` instead — it takes a minute and works for any
-combination. [Buttons and keys](controls.md) walks you through it.
+Yes — any keys you like. Not in the game's keyboard options (those
+only list the game's own actions), but by editing `StowItConfig.xml`.
+It takes a minute and works for any combination.
+[Buttons and keys](controls.md) walks you through it.
 
 ## Does it touch my toolbelt?
 
