@@ -42,6 +42,9 @@ by Walber and QuickStack by Westwud.
 2. Start the game (EAC must allow mods; `SkipWithAntiCheat` is set).
 3. In a world: place Writable Storage Crates, sign them, press LeftAlt + X.
 
+Something not working? The [FAQ](docs/user/faq.md) covers the usual
+suspects, including the missing `0_TFP_Harmony` folder.
+
 ## Documentation
 
 ### For players

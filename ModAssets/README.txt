@@ -164,6 +164,17 @@ crate and land in your new one.
 Have fun, and happy hoarding.
 
 
+IF SOMETHING DOES NOT WORK
+
+Answers to the usual questions (mod not loading, items landing in
+the wrong crate, the missing 0_TFP_Harmony folder and more) are in
+the online FAQ:
+
+  https://github.com/Mad-M00/M00-StowIt/blob/main/docs/user/faq.md
+
+The full player guide lives one folder up from there.
+
+
 CREDITS
 
 This mod was inspired by the work of two other modders:
