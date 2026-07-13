@@ -20,20 +20,27 @@ jobs:
       - name: Test
         run: dotnet test tests/M00-StowIt.Tests/M00-StowIt.Tests.csproj -c Release --nologo
 
-      # Major.Minor and the build offset come from the csproj (single source
-      # of truth); the build number is the offset plus this workflow's run
-      # number, so numbering starts where the csproj says.
+      # Tag builds (v1.0.23) release exactly the tagged version. For branch
+      # builds, Major.Minor and the build offset come from the csproj (single
+      # source of truth) and the build number is the offset plus this
+      # workflow's run number.
       - name: Compute version
         id: version
         shell: pwsh
         run: |
-          [xml]$proj = Get-Content M00-StowIt.csproj
-          $props = $proj.Project.PropertyGroup
-          $major = ($props.MajorVersion | Where-Object { $_ }) | Select-Object -First 1
-          $minor = ($props.MinorVersion | Where-Object { $_ }) | Select-Object -First 1
-          $offset = ($props.BuildNumberOffset | Where-Object { $_ }) | Select-Object -First 1
-          $build = [int]$offset + ${{ github.run_number }}
-          $version = "$major.$minor.$build"
+          if ("${{ github.ref }}" -like "refs/tags/v*") {
+            $version = "${{ github.ref_name }}".TrimStart("v")
+            $build = $version.Split(".")[-1]
+          }
+          else {
+            [xml]$proj = Get-Content M00-StowIt.csproj
+            $props = $proj.Project.PropertyGroup
+            $major = ($props.MajorVersion | Where-Object { $_ }) | Select-Object -First 1
+            $minor = ($props.MinorVersion | Where-Object { $_ }) | Select-Object -First 1
+            $offset = ($props.BuildNumberOffset | Where-Object { $_ }) | Select-Object -First 1
+            $build = [int]$offset + ${{ github.run_number }}
+            $version = "$major.$minor.$build"
+          }
           "version=$version" >> $env:GITHUB_OUTPUT
           "build=$build" >> $env:GITHUB_OUTPUT
           Write-Host "Mod version: $version"
