@@ -1,0 +1,48 @@
+BBCode for the site's changelog field.
+
+---
+
+[b][size=4]v1.0 - Initial release (July 2026)[/size][/b]
+
+[b]Sorting[/b]
+[list]
+[*]One keypress ([b]LeftAlt + X[/b]) sorts your whole backpack into nearby Writable Storage Crates by the word on their sign.
+[*]26 category names work out of the box: Ammo, Food, Medical, Tools, Books, Resources, Farming, Building, Weapons and more.
+[*]Forgiving sign matching: case, punctuation and plurals never matter. "Mod Tools", "Mods \ Tools" and "MOD-TOOLS" are the same.
+[*]Specific crates beat general ones: an "Ammo 9mm" crate wins over "Ammo" automatically.
+[*]Overflow chaining: same sign on two crates? Nearest fills first, the rest walks outward crate by crate.
+[*]A crate signed "Misc" catches everything unmatched - nothing is ever lost or destroyed.
+[*]Containers without a category sign still receive top-ups of items they already hold.
+[/list]
+
+[b]Restock[/b]
+[list]
+[*][b]LeftAlt + Z[/b] refills your carried stacks (ammo, food, meds...) from nearby crates before you head out.
+[/list]
+
+[b]What it never touches[/b]
+[list]
+[*]Your toolbelt, worn armor and equipped items.
+[*]Backpack slots locked with the game's own lock button.
+[/list]
+
+[b]Customising[/b]
+[list]
+[*]All rules live in one plain text file (CrateLabels.txt): groups, item names, wildcard patterns like foodCan*, and exclusions with a minus sign.
+[*]Edit rules from inside the game with the stow console command: stow alias, stow what, stow search, stow groups, stow reload.
+[*]Every in-game edit keeps an automatic backup (CrateLabels.txt.bak).
+[*]Hotkeys are configurable in StowItConfig.xml.
+[/list]
+
+[b]Languages[/b]
+[list]
+[*]Sign labels ship for all official game languages: de, es, fr, it, ja, ko, pl, pt-BR, ru, tr, zh-CN, zh-TW.
+[/list]
+
+[b]Compatibility[/b]
+[list]
+[*]Items from other mods sort like vanilla ones - the item list is read from the running game.
+[*]Multiplayer and dedicated server safe: uses the game's own container locking, so no lost or duplicated items.
+[*]EAC must be off (like any DLL mod); with EAC on the mod safely skips itself.
+[*]Uninstall any time by deleting the mod folder - saves are never touched.
+[/list]
