@@ -7,6 +7,10 @@ on:
   pull_request:
   workflow_dispatch:
 
+# Needed so the Release step can attach the zip to a GitHub Release.
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: windows-latest
