@@ -70,10 +70,11 @@ internal class HarmonyPatches
 	[HarmonyPatch(typeof(EntityPlayerLocal), "Update")]
 	private class EntityPlayerLocal_Update
 	{
-		public static void Postfix()
+		public static void Postfix(EntityPlayerLocal __instance)
 		{
 			try
 			{
+				Runtime.KeyGuard.Update(__instance.playerInput);
 				if (HotkeyChecker.ComboJustPressed(Runtime.Settings.SortKeyCodes))
 				{
 					Runtime.Stash.RequestSort();
@@ -89,6 +90,20 @@ internal class HarmonyPatches
 			{
 				LogException(e);
 			}
+		}
+	}
+
+	// Belt and braces for the editor selection tool specifically: skip its
+	// key handling while a StowIt modifier is held, mirroring the Ctrl guard
+	// the method already has. A Harmony prefix runs before the method body
+	// regardless of patch ordering, so this holds even if another mod reads
+	// the selection actions in ways the KeyGuard cannot reach.
+	[HarmonyPatch(typeof(BlockToolSelection), "CheckKeys")]
+	private class BlockToolSelection_CheckKeys
+	{
+		public static bool Prefix()
+		{
+			return !Runtime.KeyGuard.Active;
 		}
 	}
 

@@ -123,4 +123,18 @@ Changes reach the server the way vanilla looting does: `UpdateSlot` plus
 `SetModified`, issued while the container lock is held. It deliberately
 does not borrow the game's loot window for this - binding that window to
 a crate flips its slot views visible with no open/close lifecycle to hide
-them again, which left a ghost loot grid on screen (issue #1).
+them again, leaving the window dirty and half-bound.
+
+## Hotkeys and the game's own bindings
+
+The hotkeys are raw key polls, so pressing them does not stop the game
+from acting on the same keys. That matters with the debug menu on: the
+game binds Z to the editor's SelectionSet and X to SelectionRotate, so
+LeftAlt + Z would also plant the editor's blue selection box at the
+crosshair (issue #1). `VanillaActionSuppressor` closes the leak: while a
+combo's modifier prefix is held it disables those two InControl actions -
+which check `Enabled` at read time, so the effect is immediate for every
+consumer - and restores each action's previous state on release, so a mod
+toggling the same actions is not stomped. A prefix on
+`BlockToolSelection.CheckKeys` (mirroring its existing Ctrl guard) backs
+this up for the selection tool itself regardless of patch ordering.

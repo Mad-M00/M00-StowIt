@@ -24,6 +24,7 @@ internal sealed class ModRuntime
 		LoadConfigurationFiles();
 		Operations = new OperationTracker();
 		Ui = new PlayerUiContext();
+		KeyGuard = new VanillaActionSuppressor(() => Settings);
 		Stash = new SortingOperations(
 			Ui,
 			Operations,
@@ -46,6 +47,8 @@ internal sealed class ModRuntime
 	public OperationTracker Operations { get; }
 
 	public SortingOperations Stash { get; }
+
+	public VanillaActionSuppressor KeyGuard { get; }
 
 	public StowItSettings Settings { get; private set; }
 
@@ -84,6 +87,7 @@ internal sealed class ModRuntime
 	{
 		Ui.Clear();
 		Operations.Current = SortOperation.None;
+		KeyGuard.Reset();
 		catalog = null;
 		resolver = null;
 		aliasRulesPrepared = false;

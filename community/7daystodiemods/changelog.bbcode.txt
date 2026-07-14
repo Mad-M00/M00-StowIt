@@ -6,7 +6,7 @@ BBCode for the site's changelog field.
 
 [b]Bug fixes[/b]
 [list]
-[*]Restocking (LeftAlt + Z) no longer leaves a ghost box of numbers and icons hovering in front of your crates.
+[*]The blue box some players saw when restocking is gone. It was the game's own editor selection tool reacting to the Z in LeftAlt + Z (it only shows up when the debug menu is on). StowIt's hotkeys no longer trigger the game's editor keys - and if you ever see the box from pressing plain Z yourself, Backspace clears it.
 [*]Restocking no longer plays the container-open sound for every crate it pulls from.
 [*]Slots you lock inside a crate now stay put when you restock, and locked slots from the last container you looted no longer quietly block restocking.
 [/list]

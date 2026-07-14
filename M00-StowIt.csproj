@@ -74,6 +74,10 @@
       <HintPath>$(ManagedDir)\UnityEngine.CoreModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="InControl">
+      <HintPath>$(ManagedDir)\InControl.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="LogLibrary">
       <HintPath>$(ManagedDir)\LogLibrary.dll</HintPath>
       <Private>false</Private>
