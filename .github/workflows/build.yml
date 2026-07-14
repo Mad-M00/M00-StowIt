@@ -96,12 +96,20 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           $tag = gh release view --repo ${{ github.repository }} --json tagName --jq .tagName
-          $count = git rev-list "$tag..HEAD" --count
+          $count = [int](git rev-list "$tag..HEAD" --count)
           [xml]$proj = Get-Content M00-StowIt.csproj
           $props = $proj.Project.PropertyGroup
           $major = ($props.MajorVersion | Where-Object { $_ }) | Select-Object -First 1
           $minor = ($props.MinorVersion | Where-Object { $_ }) | Select-Object -First 1
-          $ver = "v$major.$minor.$count"
+          # Same Major.Minor as the latest release: the dev number continues
+          # from the release patch (v1.1.30 + 2 commits = v1.1.32). A new
+          # Major.Minor line restarts the count from zero.
+          $tagParts = $tag.TrimStart("v").Split(".")
+          $build = $count
+          if ($tagParts[0] -eq $major -and $tagParts[1] -eq $minor) {
+            $build = [int]$tagParts[2] + $count
+          }
+          $ver = "v$major.$minor.$build"
           $json = '{"schemaVersion":1,"label":"dev","message":"' + $ver + '","color":"orange"}'
           $body = @{
             message = "Update dev badge to $ver"

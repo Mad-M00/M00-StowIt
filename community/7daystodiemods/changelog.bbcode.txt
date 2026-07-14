@@ -2,7 +2,7 @@ BBCode for the site's changelog field.
 
 ---
 
-[b][size=4]v1.1 (July 2026)[/size][/b]
+[b][size=4]v1.1.30 (July 2026)[/size][/b]
 
 [b]Bug fixes[/b]
 [list]
