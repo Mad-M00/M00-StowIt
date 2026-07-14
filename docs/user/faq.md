@@ -74,6 +74,16 @@ only list the game's own actions), but by editing `StowItConfig.xml`.
 It takes a minute and works for any combination.
 [Buttons and keys](controls.md) walks you through it.
 
+## Does it get in the way of vehicle storage?
+
+No — your motorcycle looting routine stays exactly as it is. StowIt's
+buttons hide themselves whenever a vehicle or loot container is open,
+so the game's own stack buttons are untouched and in their usual
+spots. Vehicle storage is never sorted into or out of, either: the mod
+only talks to placed storage near you. And the hotkeys politely refuse
+to run while any container is open, so a stray keypress mid-looting
+does nothing.
+
 ## Does it touch my toolbelt?
 
 No. Only the backpack is sorted. Your toolbelt, worn armor and equipped
