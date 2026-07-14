@@ -255,10 +255,19 @@ internal sealed class SortingOperations
 		bool createNewStacks =
 			MoveKindFor(SortOperation.Restock) == XUiM_LootContainer.EItemMoveKind.FillAndCreate;
 		IInventory playerInventory = LocalPlayerUI.GetUIForPrimaryPlayer().mXUi.PlayerInventory;
+		int itemsMoved = 0;
+		int cratesUsed = 0;
 		foreach (ILockTarget target in containers)
 		{
-			RestockFromCrate((TEFeatureStorage)target, playerInventory, createNewStacks);
+			int moved = RestockFromCrate((TEFeatureStorage)target, playerInventory, createNewStacks);
+			if (moved > 0)
+			{
+				itemsMoved += moved;
+				cratesUsed++;
+			}
 		}
+		log.Info($"Restock ({(createNewStacks ? "fill and create" : "top-up only")}): " +
+			$"moved {itemsMoved} item(s) from {cratesUsed} of {containers.Length} crate(s)");
 		LockManager.Instance.UnlockRequestLocal();
 	}
 
@@ -269,12 +278,12 @@ internal sealed class SortingOperations
 	// and with no container open the restore rebind is a no-op, leaving a
 	// ghost grid on screen (issue #1). Changes propagate exactly as the
 	// borrowed grid did: UpdateSlot + SetModified under the held lock.
-	private void RestockFromCrate(TEFeatureStorage crate, IInventory playerInventory, bool createNewStacks)
+	private int RestockFromCrate(TEFeatureStorage crate, IInventory playerInventory, bool createNewStacks)
 	{
 		ItemStack[] stacks = crate.items;
 		PackedBoolArray slotLocks = crate.HasSlotLocksSupport ? crate.SlotLocks : null;
 		bool startBottomRight = ui.Controls.MoveStartBottomRight;
-		bool crateChanged = false;
+		int itemsMoved = 0;
 		int i = startBottomRight ? stacks.Length - 1 : 0;
 		while (startBottomRight ? i >= 0 : i < stacks.Length)
 		{
@@ -292,20 +301,21 @@ internal sealed class SortingOperations
 				if (movedWholeStack)
 				{
 					crate.UpdateSlot(i, ItemStack.Empty.Clone());
-					crateChanged = true;
+					itemsMoved += countBefore;
 				}
 				else if (stack.count != countBefore)
 				{
 					crate.UpdateSlot(i, stack);
-					crateChanged = true;
+					itemsMoved += countBefore - stack.count;
 				}
 			}
 			i = startBottomRight ? i - 1 : i + 1;
 		}
-		if (crateChanged)
+		if (itemsMoved > 0)
 		{
 			crate.SetModified();
 		}
+		return itemsMoved;
 	}
 
 	// A quick second use of the same action escalates from topping up existing

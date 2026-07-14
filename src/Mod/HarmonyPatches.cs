@@ -30,13 +30,18 @@ internal class HarmonyPatches
 						Runtime.Stash.RequestSort();
 					};
 				}
-				button = Runtime.Ui.Controls.GetChildById("btnRestock");
-				if (button != null)
+				XUiController restockButton = Runtime.Ui.Controls.GetChildById("btnRestock");
+				if (restockButton != null)
 				{
-					button.OnPress += delegate
+					restockButton.OnPress += delegate
 					{
 						Runtime.Stash.RequestRestock();
 					};
+				}
+				if (button == null || restockButton == null)
+				{
+					Runtime.Log.Warning("Backpack buttons not found - a UI overhaul mod " +
+						"(e.g. SMX) may have replaced the backpack window. The hotkeys still work.");
 				}
 				Runtime.PrepareAliasRules();
 			}
