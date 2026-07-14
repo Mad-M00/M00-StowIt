@@ -34,6 +34,14 @@ LeftControl + S instead:
 `306 308 120` is LeftControl + LeftAlt + X. Save, then press F1 in
 the game and type `stow reload`.
 
+## When a key clashes with the game
+
+You can change either side. If a StowIt hotkey overlaps a key you
+use for something else — say you toggle crouch with LeftAlt — pick
+different StowIt keys as shown above, or move the game's own action
+to another key in the game's **Options, Controls**. Both routes work;
+use whichever keeps your muscle memory intact.
+
 ## Key code reference
 
 Every key you can use, with its code. The same list ships as a
