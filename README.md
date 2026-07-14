@@ -2,6 +2,8 @@
 
 [![Build and unit tests](https://github.com/Mad-M00/M00-StowIt/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/Mad-M00/M00-StowIt/actions/workflows/build.yml)
 [![Latest release](https://img.shields.io/github/v/release/Mad-M00/M00-StowIt?label=release)](https://github.com/Mad-M00/M00-StowIt/releases/latest)
+[![Dev version](https://img.shields.io/github/v/release/Mad-M00/M00-StowIt?include_prereleases&label=dev&color=orange)](https://github.com/Mad-M00/M00-StowIt/releases)
+[![Commits since release](https://img.shields.io/github/commits-since/Mad-M00/M00-StowIt/latest?label=commits%20since%20release)](https://github.com/Mad-M00/M00-StowIt/commits/main)
 
 ![Stow It - One click. Everything in its place.](docs/images/banner.png)
 
