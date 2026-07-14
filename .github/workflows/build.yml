@@ -15,7 +15,11 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
+      # Full history so the dev badge step can count commits since the
+      # latest release tag.
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-dotnet@v4
         with:
@@ -81,3 +85,30 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: M00-StowIt-*.zip
+
+      # The homepage dev badge shows Major.Minor.<commits since the latest
+      # release>. Written to the badges branch via the contents API so no
+      # branch checkout is needed; shields.io serves it from there.
+      - name: Update dev version badge
+        if: github.ref == 'refs/heads/main'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = gh release view --repo ${{ github.repository }} --json tagName --jq .tagName
+          $count = git rev-list "$tag..HEAD" --count
+          [xml]$proj = Get-Content M00-StowIt.csproj
+          $props = $proj.Project.PropertyGroup
+          $major = ($props.MajorVersion | Where-Object { $_ }) | Select-Object -First 1
+          $minor = ($props.MinorVersion | Where-Object { $_ }) | Select-Object -First 1
+          $ver = "v$major.$minor.$count"
+          $json = '{"schemaVersion":1,"label":"dev","message":"' + $ver + '","color":"orange"}'
+          $body = @{
+            message = "Update dev badge to $ver"
+            content = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($json))
+            branch  = "badges"
+          }
+          $sha = gh api "repos/${{ github.repository }}/contents/dev.json?ref=badges" --jq .sha
+          if ($sha) { $body.sha = $sha }
+          $body | ConvertTo-Json | gh api -X PUT "repos/${{ github.repository }}/contents/dev.json" --input -
+          Write-Host "Dev badge: $ver"
