@@ -107,8 +107,8 @@ comment at the bottom of `StowItConfig.xml`.
 | Keypad4 | 260 | KeypadPlus | 270 |
 | Keypad5 | 261 | KeypadEnter | 271 |
 | Keypad6 | 262 | KeypadEquals | 272 |
-| Keypad7 | 263 | Keypad9 | 265 |
-| Keypad8 | 264 | | |
+| Keypad7 | 263 | Keypad8 | 264 |
+| Keypad9 | 265 | | |
 
 ### Everything else
 
