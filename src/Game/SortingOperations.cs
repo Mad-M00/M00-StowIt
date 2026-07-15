@@ -201,13 +201,54 @@ internal sealed class SortingOperations
 				StashPassKind.TakeGroupRuleMatches => i => RulesMatch(slotItems[i], rules, MatchTier.Group),
 				_ => null
 			};
-			XUiM_LootContainer.EItemMoveKind moveKind = pass.Kind == StashPassKind.TopUpExistingStacks
-				? XUiM_LootContainer.EItemMoveKind.FillAndCreate
-				: XUiM_LootContainer.EItemMoveKind.All;
-			PackedBoolArray ignoredSlots = SlotMasks.BuildIgnoredMask(slots, lockedSlots, allowSlot);
-			TEFeatureStorage crate = crates[pass.CrateIndex];
-			XUiM_LootContainer.StashItems(ui.BackpackWindow, ui.Backpack, crate, 0,
-				ignoredSlots, moveKind, ui.Controls.MoveStartBottomRight);
+			bool requireExistingStack = pass.Kind == StashPassKind.TopUpExistingStacks;
+			MoveMatchingSlotsIntoCrate(slots, lockedSlots, allowSlot,
+				crates[pass.CrateIndex], requireExistingStack);
+		}
+	}
+
+	// Mirrors the slot loop of XUiM_LootContainer.StashItems, moving straight
+	// from the backpack slot controllers into the crate. Category passes must
+	// not go through StashItems itself: backpack overhaul mods patch it (e.g.
+	// Adaptive Backpack replaces every EItemMoveKind.All call with "dump the
+	// whole multi-page backpack into the container"), which turned a routed
+	// pass into an unsorted dump of everything into the first crate.
+	private void MoveMatchingSlotsIntoCrate(XUiController[] slots, PackedBoolArray lockedSlots,
+		Func<int, bool> allowSlot, TEFeatureStorage crate, bool requireExistingStack)
+	{
+		bool startBottomRight = ui.Controls.MoveStartBottomRight;
+		bool crateChanged = false;
+		int i = startBottomRight ? slots.Length - 1 : 0;
+		while (startBottomRight ? i >= 0 : i < slots.Length)
+		{
+			bool slotLocked = lockedSlots != null && i < lockedSlots.Length && lockedSlots[i];
+			var slot = (XUiC_ItemStack)slots[i];
+			ItemStack stack = slot.ItemStack;
+			if (!slotLocked && !slot.StackLock && stack != null && !stack.IsEmpty()
+				&& (allowSlot == null || allowSlot(i)))
+			{
+				int countBefore = stack.count;
+				crate.TryStackItem(0, stack);
+				// A successful AddItem hands the stack object to the crate, so
+				// the slot is cleared with a fresh empty stack.
+				bool movedWholeStack = stack.count == 0
+					|| ((!requireExistingStack || crate.HasItem(stack.itemValue))
+						&& crate.AddItem(stack));
+				if (movedWholeStack)
+				{
+					slot.ForceSetItemStack(ItemStack.Empty.Clone());
+					crateChanged = true;
+				}
+				else if (stack.count != countBefore)
+				{
+					slot.ForceSetItemStack(stack);
+					crateChanged = true;
+				}
+			}
+			i = startBottomRight ? i - 1 : i + 1;
+		}
+		if (crateChanged)
+		{
 			crate.SetModified();
 		}
 	}

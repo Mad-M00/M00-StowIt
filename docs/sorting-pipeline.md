@@ -88,16 +88,22 @@ turn, the 9mm rounds are already inside the `Ammo 9mm` crate and simply are
 not in the backpack any more. There is no conflict-resolution logic — the
 ordering *is* the conflict resolution.
 
-## Slot masks
+## Slot filters
 
-The game's `StashItems` accepts a "locked slots" bitmask; the mod reuses it
-as a routing filter. For each pass it builds a mask where a slot is ignored
-if it is player-locked, empty, or holds an item the pass's rules do not
-match. Two details worth copying:
+Each category pass moves items straight from the backpack slot controllers
+into the crate (`TryStackItem` / `AddItem`, write-back via
+`ForceSetItemStack`), skipping slots that are player-locked, empty, or hold
+an item the pass's rules do not match. The passes deliberately do not call
+the game's `StashItems`: backpack overhaul mods patch that method — Adaptive
+Backpack, for instance, replaces every `EItemMoveKind.All` call with "dump
+the whole multi-page backpack into the container", which turned a routed
+pass into an unsorted dump into the first crate. (Vanilla routing mode still
+uses `StashItems`; its fill-only semantics are not hijacked.) Two details
+worth copying:
 
 - **Identify once.** Each backpack slot's item is identified a single time
   per operation (slot contents can shrink or empty during the operation,
-  but never change type — `StashItems` only removes from the backpack).
+  but never change type — passes only remove from the backpack).
   Only the emptiness check is live per pass. This avoids re-doing thousands
   of string lookups across crates x passes.
 - **Top-up policy.** Historically "the crate already holds one" beat every
