@@ -2,6 +2,13 @@ BBCode for the site's changelog field.
 
 ---
 
+[b][size=4]v1.1.33 (July 2026)[/size][/b]
+
+[b]Bug fixes[/b]
+[list]
+[*]Sorting now plays nicely with paged backpack mods like Adaptive Backpack. Previously their "stash all" takeover swept your whole backpack into the first crate; StowIt now moves every item itself, so sorting routes correctly with or without those mods installed. With a paged backpack, sorting works on the page you are looking at.
+[/list]
+
 [b][size=4]v1.1.30 (July 2026)[/size][/b]
 
 [b]Bug fixes[/b]
