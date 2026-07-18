@@ -2,6 +2,14 @@ BBCode for the site's changelog field.
 
 ---
 
+[b][size=4]v1.1.34 (July 2026)[/size][/b]
+
+[b]Bug fixes[/b]
+[list]
+[*]Sorting now works alongside automation mods like Overengineered. Those mods hook the game's "put item into container" routines for their pipe networks, which could leave a sort finding your chests but moving nothing; StowIt now places items into the crate directly, the same reliable way restock already reads from it.
+[*]Sorting reports its result in the console ("moved X item(s) into Y of Z crate(s)"), and a container lock that is refused says so - so if anything ever blocks a sort again, the log will show exactly where it stopped.
+[/list]
+
 [b][size=4]v1.1.33 (July 2026)[/size][/b]
 
 [b]Bug fixes[/b]

@@ -86,6 +86,8 @@ internal sealed class SortingOperations
 		{
 			if (!success)
 			{
+				log.Info("Container lock request denied - a nearby container is " +
+					"in use by another player or held by another mod; nothing moved");
 				operations.Current = SortOperation.None;
 			}
 			else if (operations.Current == SortOperation.Sort)
@@ -190,6 +192,8 @@ internal sealed class SortingOperations
 			slotRoutedByAnyCrate[i] = slotItems[i] != null && IsRouted(slotItems[i], allRules);
 		}
 
+		int itemsMoved = 0;
+		var cratesUsed = new bool[count];
 		foreach (StashPass pass in StashPassPlanner.Plan(routing))
 		{
 			IReadOnlyList<CategoryRule> rules = crateRules[pass.CrateIndex];
@@ -202,22 +206,37 @@ internal sealed class SortingOperations
 				_ => null
 			};
 			bool requireExistingStack = pass.Kind == StashPassKind.TopUpExistingStacks;
-			MoveMatchingSlotsIntoCrate(slots, lockedSlots, allowSlot,
+			int moved = MoveMatchingSlotsIntoCrate(slots, lockedSlots, allowSlot,
 				crates[pass.CrateIndex], requireExistingStack);
+			if (moved > 0)
+			{
+				itemsMoved += moved;
+				cratesUsed[pass.CrateIndex] = true;
+			}
 		}
+		int crateTally = 0;
+		foreach (bool used in cratesUsed)
+		{
+			crateTally += used ? 1 : 0;
+		}
+		log.Info($"Stash (category): moved {itemsMoved} item(s) into {crateTally} of {count} crate(s)");
 	}
 
 	// Mirrors the slot loop of XUiM_LootContainer.StashItems, moving straight
-	// from the backpack slot controllers into the crate. Category passes must
-	// not go through StashItems itself: backpack overhaul mods patch it (e.g.
-	// Adaptive Backpack replaces every EItemMoveKind.All call with "dump the
-	// whole multi-page backpack into the container"), which turned a routed
-	// pass into an unsorted dump of everything into the first crate.
-	private void MoveMatchingSlotsIntoCrate(XUiController[] slots, PackedBoolArray lockedSlots,
+	// from the backpack slot controllers into the crate's item array. Category
+	// passes must not go through StashItems (backpack overhaul mods patch it -
+	// e.g. Adaptive Backpack replaces every EItemMoveKind.All call with "dump
+	// the whole multi-page backpack into the container"), nor through the
+	// crate's AddItem/TryStackItem/HasItem (automation mods patch those to
+	// intercept items entering containers - e.g. Overengineered, which left
+	// stashing moving nothing while restock kept working). Writes go through
+	// UpdateSlot + SetModified under the held lock, the same unpatched path
+	// RestockFromCrate already uses in the other direction.
+	private int MoveMatchingSlotsIntoCrate(XUiController[] slots, PackedBoolArray lockedSlots,
 		Func<int, bool> allowSlot, TEFeatureStorage crate, bool requireExistingStack)
 	{
 		bool startBottomRight = ui.Controls.MoveStartBottomRight;
-		bool crateChanged = false;
+		int itemsMoved = 0;
 		int i = startBottomRight ? slots.Length - 1 : 0;
 		while (startBottomRight ? i >= 0 : i < slots.Length)
 		{
@@ -228,29 +247,77 @@ internal sealed class SortingOperations
 				&& (allowSlot == null || allowSlot(i)))
 			{
 				int countBefore = stack.count;
-				crate.TryStackItem(0, stack);
-				// A successful AddItem hands the stack object to the crate, so
-				// the slot is cleared with a fresh empty stack.
+				TopUpCrateStacks(crate, stack);
+				// UpdateSlot clones the placed stack, so the backpack slot is
+				// cleared with a fresh empty stack afterwards.
 				bool movedWholeStack = stack.count == 0
-					|| ((!requireExistingStack || crate.HasItem(stack.itemValue))
-						&& crate.AddItem(stack));
+					|| ((!requireExistingStack || CrateHasItem(crate, stack.itemValue))
+						&& PlaceInEmptyCrateSlot(crate, stack));
 				if (movedWholeStack)
 				{
 					slot.ForceSetItemStack(ItemStack.Empty.Clone());
-					crateChanged = true;
+					itemsMoved += countBefore;
 				}
 				else if (stack.count != countBefore)
 				{
 					slot.ForceSetItemStack(stack);
-					crateChanged = true;
+					itemsMoved += countBefore - stack.count;
 				}
 			}
 			i = startBottomRight ? i - 1 : i + 1;
 		}
-		if (crateChanged)
+		if (itemsMoved > 0)
 		{
 			crate.SetModified();
 		}
+		return itemsMoved;
+	}
+
+	// Mirror of TEFeatureStorage.TryStackItem over crate.items, so the top-up
+	// cannot be diverted by third-party patches on the crate's insert API.
+	private static void TopUpCrateStacks(TEFeatureStorage crate, ItemStack stack)
+	{
+		ItemStack[] crateStacks = crate.items;
+		for (int i = 0; i < crateStacks.Length && stack.count > 0; i++)
+		{
+			int transferable = stack.count;
+			if (stack.itemValue.type == crateStacks[i].itemValue.type
+				&& crateStacks[i].CanStackPartly(ref transferable))
+			{
+				crateStacks[i].count += transferable;
+				stack.count -= transferable;
+				crate.UpdateSlot(i, crateStacks[i]);
+			}
+		}
+	}
+
+	// Mirror of TEFeatureStorage.AddItem: first empty slot takes the stack.
+	private static bool PlaceInEmptyCrateSlot(TEFeatureStorage crate, ItemStack stack)
+	{
+		ItemStack[] crateStacks = crate.items;
+		for (int i = 0; i < crateStacks.Length; i++)
+		{
+			if (crateStacks[i].IsEmpty())
+			{
+				crate.UpdateSlot(i, stack);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	// Mirror of TEFeatureStorage.HasItem.
+	private static bool CrateHasItem(TEFeatureStorage crate, ItemValue itemValue)
+	{
+		ItemStack[] crateStacks = crate.items;
+		for (int i = 0; i < crateStacks.Length; i++)
+		{
+			if (crateStacks[i].itemValue.type == itemValue.type)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private static bool RulesMatch(CatalogItem item, IReadOnlyList<CategoryRule> rules, MatchTier tier)

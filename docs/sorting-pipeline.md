@@ -91,15 +91,24 @@ ordering *is* the conflict resolution.
 ## Slot filters
 
 Each category pass moves items straight from the backpack slot controllers
-into the crate (`TryStackItem` / `AddItem`, write-back via
-`ForceSetItemStack`), skipping slots that are player-locked, empty, or hold
-an item the pass's rules do not match. The passes deliberately do not call
-the game's `StashItems`: backpack overhaul mods patch that method — Adaptive
-Backpack, for instance, replaces every `EItemMoveKind.All` call with "dump
-the whole multi-page backpack into the container", which turned a routed
-pass into an unsorted dump into the first crate. (Vanilla routing mode still
-uses `StashItems`; its fill-only semantics are not hijacked.) Two details
-worth copying:
+into the crate's item array (write-back via `ForceSetItemStack` on the
+backpack side, `UpdateSlot` + `SetModified` on the crate side), skipping
+slots that are player-locked, empty, or hold an item the pass's rules do
+not match. The passes deliberately avoid every patchable game API on both
+ends of the move:
+
+- Not `StashItems`: backpack overhaul mods patch that method — Adaptive
+  Backpack, for instance, replaces every `EItemMoveKind.All` call with
+  "dump the whole multi-page backpack into the container", which turned a
+  routed pass into an unsorted dump into the first crate.
+- Not the crate's `TryStackItem` / `AddItem` / `HasItem`: automation mods
+  patch those to intercept items entering containers — Overengineered, for
+  instance, left stashing moving nothing at all while restock (which never
+  calls them) kept working. The mirrors in `SortingOperations` reproduce
+  the vanilla semantics over `crate.items` directly.
+
+(Vanilla routing mode still uses `StashItems`; its fill-only semantics are
+not hijacked.) Two details worth copying:
 
 - **Identify once.** Each backpack slot's item is identified a single time
   per operation (slot contents can shrink or empty during the operation,
