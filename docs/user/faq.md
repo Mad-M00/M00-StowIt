@@ -97,6 +97,16 @@ from the server).
 No. Like every code mod, it only loads with EAC turned off in the game
 launcher. With EAC on, the game simply skips the mod; nothing breaks.
 
+## Can I add it to an existing save?
+
+Yes — no new game needed, and your containers can keep whatever names
+they already have. StowIt never writes into your save files: it reads
+crate signs only at the moment you press the sort key, and any sign
+text it does not recognise is simply ignored (at most a yellow note in
+the log). A crate without a recognised label just receives top-ups of
+items it already holds. Label the crates you want sorted into whenever
+it suits you — there is nothing to rename or empty first.
+
 ## Is it safe to uninstall?
 
 Yes. Delete the mod folder and everything stays where it was sorted.

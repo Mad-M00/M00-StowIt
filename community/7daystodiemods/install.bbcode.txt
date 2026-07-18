@@ -69,6 +69,15 @@ answers with the command help, you're done - sign some crates and press
 [b]LeftAlt + X[/b]. If it says "unknown command", walk back through
 steps 3-5.
 
+[size=4][b]Installing on an existing save[/b][/size]
+
+Go right ahead - no new game needed, and your containers can keep
+whatever names they already have. StowIt never writes into your save
+files: it reads crate signs only at the moment you press the sort key,
+and any sign text it does not recognise is simply ignored. Label the
+crates you want sorted into whenever it suits you - there is nothing
+to rename or empty first.
+
 [size=4][b]Multiplayer and dedicated servers[/b][/size]
 
 Every player needs the mod installed - as a DLL mod it does not push
